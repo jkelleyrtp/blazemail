@@ -1,5 +1,5 @@
 [package]
-name = "blazemail-desktop"
+name = "blazemail"
 version = "0.0.0"
 edition = "2018"
 
@@ -29,3 +29,6 @@ tokio = { version = "1.22.0", features = ["full"] }
 webbrowser = "0.8.2"
 log = "0.4.17"
 html-escape = "0.2.12"
+base64 = "0.13.1"
+futures = "0.3.25"
+im = "15.1.0"

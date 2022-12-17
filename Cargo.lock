@@ -101,6 +101,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "065374052e7df7ee4047b1160cca5e1467a12351a40b3da123c870ba0b8eda2a"
 
 [[package]]
+name = "atty"
+version = "0.2.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9b39be18770d11421cdb1b9947a45dd3f37e93092cbf377614828a319d5fee8"
+dependencies = [
+ "hermit-abi",
+ "libc",
+ "winapi",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -128,17 +139,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "blazemail-desktop"
+name = "blazemail"
 version = "0.0.0"
 dependencies = [
+ "base64",
  "dioxus",
  "dioxus-desktop",
  "dioxus-router",
  "fermi",
+ "futures",
  "google-gmail1",
  "html-escape",
  "hyper",
  "hyper-rustls",
+ "im",
  "lettre",
  "log 0.4.17",
  "oauth2",
@@ -228,9 +242,9 @@ dependencies = [
 
 [[package]]
 name = "cc"
-version = "1.0.77"
+version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9f73505338f7d905b19d18738976aae232eb46b8efc15554ffc56deb5d9ebe4"
+checksum = "a20104e2335ce8a659d6dd92a51a767a0c062599c73b343fd152cb401e828c3d"
 
 [[package]]
 name = "cesu8"
@@ -332,6 +346,17 @@ name = "color_quant"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
+
+[[package]]
+name = "colored"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3616f750b84d8f0de8a58bda93e08e2a81ad3f523089b05f1dffecab48c6cbd"
+dependencies = [
+ "atty",
+ "lazy_static",
+ "winapi",
+]
 
 [[package]]
 name = "combine"
@@ -583,7 +608,7 @@ dependencies = [
 [[package]]
 name = "dioxus"
 version = "0.2.4"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "dioxus-core",
  "dioxus-core-macro",
@@ -595,23 +620,25 @@ dependencies = [
 [[package]]
 name = "dioxus-core"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "anyhow",
  "bumpalo",
  "futures-channel",
  "futures-util",
- "fxhash",
  "indexmap",
+ "log 0.4.17",
  "longest-increasing-subsequence",
+ "rustc-hash",
  "serde",
  "slab",
+ "smallbox",
 ]
 
 [[package]]
 name = "dioxus-core-macro"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "dioxus-rsx",
  "proc-macro2",
@@ -622,7 +649,7 @@ dependencies = [
 [[package]]
 name = "dioxus-desktop"
 version = "0.2.3"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "core-foundation",
  "dioxus-core",
@@ -647,7 +674,7 @@ dependencies = [
 [[package]]
 name = "dioxus-hooks"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "dioxus-core",
  "futures-channel",
@@ -657,7 +684,7 @@ dependencies = [
 [[package]]
 name = "dioxus-html"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "async-trait",
  "dioxus-core",
@@ -671,12 +698,12 @@ dependencies = [
 [[package]]
 name = "dioxus-interpreter-js"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 
 [[package]]
 name = "dioxus-router"
 version = "0.2.3"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "dioxus",
  "futures-channel",
@@ -684,16 +711,16 @@ dependencies = [
  "log 0.4.17",
  "serde",
  "serde_urlencoded",
+ "simple_logger",
  "thiserror",
  "url 2.3.1",
 ]
 
 [[package]]
 name = "dioxus-rsx"
-version = "0.0.0"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+version = "0.0.1"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
- "dioxus-core",
  "proc-macro2",
  "quote",
  "serde",
@@ -807,7 +834,7 @@ dependencies = [
 [[package]]
 name = "fermi"
 version = "0.2.1"
-source = "git+https://github.com/dioxuslabs/dioxus.git#937eb1f0f0e3e71b09a6b74a1d8f70fba0e75bdf"
+source = "git+https://github.com/dioxuslabs/dioxus.git#482ae5e395a7e8c5bcefc98f47d8f6c83f8c214a"
 dependencies = [
  "dioxus-core",
  "im-rc",
@@ -1486,6 +1513,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "im"
+version = "15.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0acd33ff0285af998aaf9b57342af478078f53492322fafc47450e09397e0e9"
+dependencies = [
+ "bitmaps",
+ "rand_core 0.6.4",
+ "rand_xoshiro",
+ "sized-chunks",
+ "typenum",
+ "version_check",
+]
+
+[[package]]
 name = "im-rc"
 version = "15.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1569,9 +1610,9 @@ checksum = "ae52f28f45ac2bc96edb7714de995cffc174a395fb0abf5bff453587c980d7b9"
 
 [[package]]
 name = "ipnet"
-version = "2.6.0"
+version = "2.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec947b7a4ce12e3b87e353abae7ce124d025b6c7d6c5aea5cc0bcf92e9510ded"
+checksum = "11b0d96e660696543b251e58030cf9787df56da39dab19ad60eae7353040917e"
 
 [[package]]
 name = "itertools"
@@ -2141,9 +2182,9 @@ dependencies = [
 
 [[package]]
 name = "paste"
-version = "1.0.9"
+version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1de2e551fb905ac83f73f7aedf2f0cb4a0da7e35efa24a202a936269f1f18e1"
+checksum = "cf1c2c742266c2f1041c914ba65355a83ae8747b05f208319784083583494b4b"
 
 [[package]]
 name = "percent-encoding"
@@ -2539,6 +2580,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "rustc-hash"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
+
+[[package]]
 name = "rustc_version"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2720,18 +2767,18 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.149"
+version = "1.0.151"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "256b9932320c590e707b94576e3cc1f7c9024d0ee6612dfbcf1cb106cbe8e055"
+checksum = "97fed41fc1a24994d044e6db6935e69511a1153b52c15eb42493b26fa87feba0"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.149"
+version = "1.0.151"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4eae9b04cbffdfd550eb462ed33bc6a1b68c935127d008b27444d08380f94e4"
+checksum = "255abe9a125a985c05190d687b320c12f9b1f0b99445e608c21ba0782c719ad8"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2812,6 +2859,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "simple_logger"
+version = "4.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e190a521c2044948158666916d9e872cbb9984f755e9bb3b5b75a836205affcd"
+dependencies = [
+ "atty",
+ "colored",
+ "log 0.4.17",
+ "time",
+ "windows-sys 0.42.0",
+]
+
+[[package]]
 name = "siphasher"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2835,6 +2895,12 @@ checksum = "4614a76b2a8be0058caa9dbbaf66d988527d86d003c11a94fbd335d7661edcef"
 dependencies = [
  "autocfg",
 ]
+
+[[package]]
+name = "smallbox"
+version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4679d6eef28b85020158619fc09769de89e90886c5de7157587d87cb72648faa"
 
 [[package]]
 name = "smallvec"
@@ -2966,9 +3032,9 @@ dependencies = [
 
 [[package]]
 name = "tao"
-version = "0.15.6"
+version = "0.15.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c8fab9f2ba9a6d7ad55b46f812984b6ab203d774c162163ac297edc9567404b"
+checksum = "ac8e6399427c8494f9849b58694754d7cc741293348a6836b6c8d2c5aa82d8e6"
 dependencies = [
  "bitflags",
  "cairo-rs",
@@ -3076,6 +3142,7 @@ version = "0.3.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a561bf4617eebd33bca6434b988f39ed798e527f51a1e797d0ee4f61c0a38376"
 dependencies = [
+ "itoa 1.0.4",
  "libc",
  "num_threads",
  "serde",
@@ -3187,9 +3254,9 @@ dependencies = [
 
 [[package]]
 name = "toml"
-version = "0.5.9"
+version = "0.5.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d82e1a7758622a465f8cee077614c73484dac5b836c02ff6a40d5d1010324d7"
+checksum = "1333c76748e868a4d9d1017b5ab53171dfd095f70c712fdb4653a406547f598f"
 dependencies = [
  "serde",
 ]
@@ -3535,9 +3602,9 @@ dependencies = [
 
 [[package]]
 name = "webpki-roots"
-version = "0.22.5"
+version = "0.22.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "368bfe657969fb01238bb756d351dcade285e0f6fcbd36dcb23359a5169975be"
+checksum = "b6c71e40d7d2c34a5106301fb632274ca37242cd0c9d3e64dbece371a40a2d87"
 dependencies = [
  "webpki",
 ]
@@ -3804,9 +3871,9 @@ dependencies = [
 
 [[package]]
 name = "wry"
-version = "0.22.6"
+version = "0.23.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f20dd05f35fa0f8d107a4596b50d4e813b2e4f48cdec1f39854f092f7bbacc99"
+checksum = "4c1ad8e2424f554cc5bdebe8aa374ef5b433feff817aebabca0389961fc7ef98"
 dependencies = [
  "base64",
  "block",

@@ -28,7 +28,7 @@ static GMAIL_SCOPES: &[&str] = &[
     "https://www.googleapis.com/auth/calendar",         // calendar
 ];
 
-async fn make_client() -> Gmail<HttpsConnector<HttpConnector>> {
+pub async fn make_client() -> Gmail<HttpsConnector<HttpConnector>> {
     // yes, you do indeed distribute your client secret with your app
     // it's fine to do this, but please don't abuse our API access <3
     let secret = google_gmail1::oauth2::read_application_secret("data/client_secret.json")
@@ -196,4 +196,18 @@ async fn read_messages() {
             msg.snippet.unwrap_or_default()
         );
     }
+}
+
+#[test]
+fn decode() {
+    let body = "SGkgSm9uYXRoYW4sDQpJdCB3YW50ZWQgdG8gbWFrZSBzdXJlIHRoYXQgeW91IHJlc3BvbmQgdG8gVmlja2kncyBpbnF1aXJ5Lg0KVGhlIHN1cHBsaWVyIGRvY3VtZW50cyBuZWVkIHRvIGJlIGZpbGxlZCBvdXQgc28gdGhhdCBwcm9jdXJlbWVudCBjYW4gcHJvY2VlZCB3aXRoIHRoZSBhZ3JlZW1lbnQuDQpJcyB0aGVyZSBhbiBpc3N1ZSB3aXRoIHRoZSBkb2N1bWVudHM_DQoNClRoeCwNCi1TaWQuDQoNCkZyb206IFZpY2tpIFpob3UgPHZ6aG91QGZ1dHVyZXdlaS5jb20-DQpTZW50OiBUaHVyc2RheSwgTm92ZW1iZXIgMTAsIDIwMjIgMzowMSBQTQ0KVG86IEpvbmF0aGFuIEtlbGxleSA8amtlbGxleXJ0cEBnbWFpbC5jb20-DQpDYzogU2lkIEFza2FyeSA8c2Fza2FyeUBmdXR1cmV3ZWkuY29tPg0KU3ViamVjdDogUkU6IEludHJvZHVjaW5nIEpvbmF0aGFuIEtlbGx5DQoNCkhpIEpvbmF0aGFuLA0KDQpJIGhvcGUgdGhpcyBlbWFpbCBmaW5kcyB5b3Ugd2VsbC4gSSBhbSB3b3JraW5nIHdpdGggU2lkIGZvciB5b3VyIEZ1dHVyZXdlaSBjb25zdWx0aW5nIHByb2plY3QuIENhbiB5b3UgcGxlYXNlIHByb3ZpZGUgZm9sbG93aW5nIHN1cHBsaWVyIHF1YWxpZmljYXRpb24gZG9jdW1lbnRzPw0KDQoNCiAgMS4gIFctOQ0KICAyLiAgQmFuayBhY2NvdW50IGluZm8NCiAgMy4gIFN1cHBsaWVyIG9mIENvbmZsaWN0IG9mIEludGVyZXN0IChBdHRhY2hlZCkNCiAgNC4gIFN1cHBsaWVyIEludGVncml0eSBQb2xpY3kgKGF0dGFjaGVkKQ0KDQpUaGFua3MNClZpY2tpDQoNCkZyb206IFNpZCBBc2thcnkgPHNhc2thcnlAZnV0dXJld2VpLmNvbTxtYWlsdG86c2Fza2FyeUBmdXR1cmV3ZWkuY29tPj4NClNlbnQ6IFRodXJzZGF5LCBOb3ZlbWJlciAxMCwgMjAyMiA0OjQzIFBNDQpUbzogSm9uYXRoYW4gS2VsbGV5IDxqa2VsbGV5cnRwQGdtYWlsLmNvbTxtYWlsdG86amtlbGxleXJ0cEBnbWFpbC5jb20-PjsgVmlja2kgWmhvdSA8dnpob3VAZnV0dXJld2VpLmNvbTxtYWlsdG86dnpob3VAZnV0dXJld2VpLmNvbT4-DQpTdWJqZWN0OiBJbnRyb2R1Y2luZyBKb25hdGhhbiBLZWxseQ0KDQpIaSBWaWNraSwNCkpvbmF0aGFuIHdpbGwgYmUgZG9pbmcgYW4gU09XIGZvciBSdXN0IEdVSS4NCg0KSm9uYXRoYW4sDQpNZWV0IFZpY2tpLCBvdXIgcHJvY3VyZW1lbnQgbWFuYWdlciwgd2hvIHdpbGwgYmUgdGFraW5nIHVzIHRocm91Z2ggdGhlIGFncmVlbWVudCBwcm9jZXNzLg0KDQpUYWtlIGNhcmUsDQotU2lkLg0K";
+
+    // base64::decode_config(body, base64::BINHEX).map(|_| println!("ok, BINHEX"));
+    // base64::decode_config(body, base64::BCRYPT).map(|_| println!("ok, BCRYPT"));
+    // base64::decode_config(body, base64::CRYPT).map(|_| println!("ok, CRYPT"));
+    // base64::decode_config(body, base64::IMAP_MUTF7).map(|_| println!("ok, IMAP_MUTF7"));
+    // base64::decode_config(body, base64::STANDARD).map(|_| println!("ok, STANDARD"));
+    // base64::decode_config(body, base64::STANDARD_NO_PAD).map(|_| println!("ok, STANDARD_NO_PAD"));
+    // base64::decode_config(body, base64::URL_SAFE).map(|_| println!("ok, URL_SAFE"));
+    // base64::decode_config(body, base64::URL_SAFE_NO_PAD).map(|_| println!("ok, URL_SAFE_NO_PAD"));
 }
