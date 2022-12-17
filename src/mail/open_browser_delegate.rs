@@ -25,6 +25,6 @@ impl InstalledFlowDelegate for OpenBrowserDelegate {
         Box::pin(async move {
             webbrowser::open(url).unwrap();
             Ok(String::new())
-        })
+        }) as Pin<Box<dyn Future<Output = Result<String, String>> + Send + 'a>>
     }
 }

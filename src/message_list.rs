@@ -1,5 +1,6 @@
 use crate::state::*;
 use dioxus::prelude::*;
+use dioxus_router::use_route;
 use fermi::use_atom_state;
 
 pub fn MessageList(cx: Scope) -> Element {
@@ -9,16 +10,15 @@ pub fn MessageList(cx: Scope) -> Element {
         div { class: "h-full flex flex-col items-stretch bg-white user-select-none",
             div { class: "flex flex-row flex-auto min-h-0",
                 div { class: "flex flex-col items-stretch min-h-0 overflow-x-hidden", style: "flex: 0 0 100%;",
-                    div { class: "text-bold font-sm flex flex-row border-b border-gray-200",
+                    div { class: "text-bold font-cx flex flex-row border-b text-gray-700 border-gray-200",
                         div { class: "flex-1 overflow-hidden ml-4", "From" }
                         div { class: "flex-1 overflow-hidden ml-4", "Snippet" }
-                        div { class: "flex-1 overflow-hidden ml-4", "Date" }
+                        div { class: "flex-1 overflow-hidden ml-4", "Date Sent" }
+                        div { class: "flex-1 overflow-hidden ml-4", "Date Received" }
                     }
-                    div { class: "flex-initial min-h-0 overflow-y-auto px-2",
+                    div { class: "flex-initial min-h-0 overflow-y-auto px-2 pt-2 text-sm",
                         (0..messages.len()).map(|idx| rsx! (
-                            MessageListItem {
-                                key: "{idx}", idx: idx
-                            }
+                            MessageListItem { key: "{idx}", idx: idx }
                         ))
                     }
                 }
@@ -75,7 +75,8 @@ pub fn MessageListItem(cx: Scope, idx: usize) -> Element {
             onclick: move |_| selected.set(Some(*idx)),
             div { class: "flex-1 overflow-hidden ml-4 user-select-none", "{name}" }
             div { class: "flex-1 overflow-hidden ml-4 user-select-none", "{snippet}" }
-            div { class: "flex-1 overflow-hidden ml-4 user-select-none", "Date" }
+            div { class: "flex-1 overflow-hidden ml-4 user-select-none", "Sent" }
+            div { class: "flex-1 overflow-hidden ml-4 user-select-none", "Received" }
         }
     })
 }

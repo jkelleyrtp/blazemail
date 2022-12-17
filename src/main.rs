@@ -1,9 +1,6 @@
 #![allow(non_snake_case)]
 
-use dioxus::prelude::*;
-use dioxus_desktop::{tao::platform::macos::WindowBuilderExtMacOS, use_window, WindowBuilder};
-use fermi::{use_atom_root, use_atom_state, use_init_atom_root, use_read, Atom};
-use google_gmail1::api::{MessagePart, MessagePartHeader};
+use dioxus_desktop::{tao::platform::macos::WindowBuilderExtMacOS, LogicalSize, WindowBuilder};
 
 mod activites;
 mod app;
@@ -16,8 +13,15 @@ mod sidebar;
 mod state;
 
 fn main() {
-    // include tailwind from cdn
-    static CUSTOM_HEAD: &str = r#"
+    let config = dioxus_desktop::Config::default()
+        .with_custom_head(CUSTOM_HEAD.into())
+        .with_window(make_window());
+
+    dioxus_desktop::launch_cfg(app::app, config);
+}
+
+// include tailwind from cdn
+static CUSTOM_HEAD: &str = r#"
     <script src="https://cdn.tailwindcss.com"></script>
     <style type="text/css">
         html, body {
@@ -36,18 +40,12 @@ fn main() {
     </style>
 "#;
 
-    dioxus_desktop::launch_cfg(
-        app::app,
-        dioxus_desktop::Config::default()
-            .with_custom_head(CUSTOM_HEAD.into())
-            .with_window(
-                WindowBuilder::new()
-                    .with_has_shadow(true)
-                    .with_transparent(true)
-                    .with_titlebar_buttons_hidden(true)
-                    .with_title_hidden(true)
-                    .with_titlebar_hidden(true)
-                    .with_maximized(true),
-            ),
-    );
+fn make_window() -> WindowBuilder {
+    WindowBuilder::new()
+        .with_has_shadow(true)
+        .with_transparent(true)
+        .with_titlebar_buttons_hidden(true)
+        .with_title_hidden(true)
+        .with_titlebar_hidden(true)
+        .with_min_inner_size(LogicalSize::new(600, 800))
 }

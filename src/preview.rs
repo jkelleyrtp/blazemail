@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use dioxus_desktop::use_window;
 use fermi::use_read;
 use google_gmail1::api::{MessagePart, MessagePartHeader};
 
@@ -11,7 +12,7 @@ pub fn Preview(cx: Scope) -> Element {
         div { class: "flex flex-col bg-white flex-grow w-1/2 border-l border-gray-200",
             Toolbar {}
             match *selected {
-                Some(idx) => rsx!(RenderMessage { idx: idx } ),
+                Some(idx) => rsx!( RenderMessage { idx: idx } ),
                 None => rsx!(div { class: "m-auto", "no message selected" }),
             }
         }
@@ -19,10 +20,14 @@ pub fn Preview(cx: Scope) -> Element {
 }
 
 fn Toolbar(cx: Scope) -> Element {
+    let window = use_window(cx);
     let toolbar_cfg = use_read(cx, TOOLBAR_CFG);
 
     cx.render(rsx! {
-        div { class: "flex bg-gray-100 border-b border-gray-200 p-4 h-12",
+        div {
+            class: "flex bg-gray-100 border-b border-gray-200 h-12",
+            onmousedown: move |_| window.drag(),
+
             div {
                 button {}
             }
