@@ -13,7 +13,7 @@ pub fn Preview(cx: Scope) -> Element {
             Toolbar {}
             match *selected {
                 Some(idx) => rsx!( RenderMessage { idx: idx } ),
-                None => rsx!(div { class: "m-auto", "no message selected" }),
+                None => rsx!(div { class: "m-auto h-full", "no message selected" }),
             }
         }
     ))
@@ -32,7 +32,7 @@ fn Toolbar(cx: Scope) -> Element {
                 button {}
             }
             div {
-                button {}
+                button {"edit"}
                 button {}
                 button {}
                 button {}
@@ -97,17 +97,16 @@ fn extract_from(headers: &[MessagePartHeader]) -> Option<&str> {
 }
 
 fn decode_first_mime(parts: &[MessagePart], mime: &str) -> Option<String> {
-    parts
+    let bytes = parts
         .iter()
-        .find(|p| p.mime_type.as_deref() == Some(mime))
-        .and_then(|body| {
-            body.body.as_ref().map(|body| {
-                let bytes =
-                    base64::decode_config(body.data.as_ref().unwrap().as_bytes(), base64::URL_SAFE)
-                        .unwrap();
-                let body = String::from_utf8_lossy(&bytes);
+        .find(|p| p.mime_type.as_deref() == Some(mime))?
+        .body
+        .as_ref()?
+        .data
+        .as_ref()?
+        .as_bytes();
 
-                body.to_string()
-            })
-        })
+    let bytes = base64::decode_config(bytes, base64::URL_SAFE).unwrap();
+
+    Some(String::from_utf8_lossy(&bytes).to_string())
 }

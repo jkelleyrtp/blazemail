@@ -13,32 +13,34 @@ mod sidebar;
 mod state;
 
 fn main() {
-    let config = dioxus_desktop::Config::default()
-        .with_custom_head(CUSTOM_HEAD.into())
-        .with_window(make_window());
-
-    dioxus_desktop::launch_cfg(app::app, config);
+    dioxus_desktop::launch_cfg(app::app, make_config());
 }
 
-// include tailwind from cdn
-static CUSTOM_HEAD: &str = r#"
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/css">
-        html, body {
-            height: 100%;
-            margin: 0;
-            overscroll-behavior-y: none;
-            overscroll-behavior-x: none;
-            overflow: hidden;
-        }
-        #main, #bodywrap {
-            height: 100%;
-            margin: 0;
-            overscroll-behavior-x: none;
-            overscroll-behavior-y: none;
-        }
-    </style>
-"#;
+fn make_config() -> dioxus_desktop::Config {
+    dioxus_desktop::Config::default()
+        .with_window(make_window())
+        .with_custom_head(
+            r#"
+<script src="https://cdn.tailwindcss.com"></script>
+<style type="text/css">
+    html, body {
+        height: 100%;
+        margin: 0;
+        overscroll-behavior-y: none;
+        overscroll-behavior-x: none;
+        overflow: hidden;
+    }
+    #main, #bodywrap {
+        height: 100%;
+        margin: 0;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: none;
+    }
+</style>
+"#
+            .to_owned(),
+        )
+}
 
 fn make_window() -> WindowBuilder {
     WindowBuilder::new()

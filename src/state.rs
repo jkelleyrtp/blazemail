@@ -37,3 +37,5 @@ pub static ACCOUNTS: Atom<Vec<LoggedInAccount>> = |_| {
         },
     ]
 };
+
+pub static SIMILAR_MESSAGES: Atom<Vec<usize>> = |_| vec![];

@@ -11,9 +11,7 @@ use google_gmail1::api::{MessagePart, MessagePartHeader};
 
 pub fn app(cx: Scope) -> Element {
     use_init_atom_root(cx);
-
     let root = use_atom_root(cx).clone();
-
     use_coroutine(cx, |handle| activites::main_loop(handle, root));
 
     cx.render(rsx! {

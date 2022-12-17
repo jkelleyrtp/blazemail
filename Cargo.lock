@@ -148,6 +148,7 @@ dependencies = [
  "dioxus-router",
  "fermi",
  "futures",
+ "futures-util",
  "google-gmail1",
  "html-escape",
  "hyper",
